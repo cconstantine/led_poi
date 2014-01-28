@@ -6,7 +6,7 @@
 
 #include "speed_report.h"
 
-Adafruit_NeoPixel Mode::strip = Adafruit_NeoPixel(118/2, 6, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel Mode::strip = Adafruit_NeoPixel(57, 6, NEO_GRB + NEO_KHZ800);
 
 Mode* modes[2];
 volatile int mode = 0;
@@ -27,7 +27,7 @@ void setup() {
 
   modes[0] = new Chase();
   modes[1] = new Rainbow();
-  
+
   sr = new SpeedReport();
 }
 
@@ -41,9 +41,10 @@ void loop() {
   lastPinPos = currentPinPos;
   modes[mode]->tick();
   modes[mode]->show();
-  
+
   sr->tick();
 }
+
 
 
 
