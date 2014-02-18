@@ -1,4 +1,3 @@
-
 class SpeedReport {
 public:
   SpeedReport();
@@ -8,3 +7,6 @@ private:
   unsigned long last_millis;
   unsigned long ticks;
 };
+
+
+

@@ -3,7 +3,7 @@
 
 Chase::Chase() : pos(0), speed(1), last_move(0) { }
 
-const int wait_time = 10;
+const int wait_time = 4;
   
 const int width = 6;
 
@@ -22,10 +22,6 @@ void Chase::tick() {
   }
 
   memset(strip.getPixels(), 0, strip.numPixels() * 3);
-
-  for(int i = 0;i < strip.numPixels();++i) {
-    strip.setPixelColor(i,  10, 10, 10);
-  }
   
   for(int i = 0;i < width;++i) {
     byte wheel_pos = now/2 % 255;
@@ -33,6 +29,14 @@ void Chase::tick() {
      rainbow_pallet[wheel_pos][0],
      rainbow_pallet[wheel_pos][1],
      rainbow_pallet[wheel_pos][2]);
+     
+    strip.setPixelColor( (strip.numPixels() - width) -  (pos + i),
+     rainbow_pallet[wheel_pos][0],
+     rainbow_pallet[wheel_pos][1],
+     rainbow_pallet[wheel_pos][2]);
+     
   }
 }
+
+
 

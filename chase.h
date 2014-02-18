@@ -12,7 +12,11 @@ private:
   int pos;
   int speed;
   unsigned long last_move;  
+
 };
 
 
 #endif
+
+
+

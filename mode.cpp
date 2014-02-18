@@ -3,7 +3,7 @@
 #include "mode.h"
 
 
-byte Mode::rainbow_pallet[][3] = {
+PROGMEM byte Mode::rainbow_pallet[][3] = {
   0, 255, 0, 3, 252, 0, 6, 249, 0, 9, 246, 0, 12, 243, 0, 15, 240, 0, 18, 237, 0, 21, 234, 0,
   24, 231, 0, 27, 228, 0, 30, 225, 0, 33, 222, 0, 36, 219, 0, 39, 216, 0, 42, 213, 0, 45, 210, 0,
   48, 207, 0, 51, 204, 0, 54, 201, 0, 57, 198, 0, 60, 195, 0, 63, 192, 0, 66, 189, 0, 69, 186, 0,
@@ -44,7 +44,7 @@ unsigned int Mode::scale(unsigned int num, unsigned int natural_max, unsigned in
 }
 
 void Mode::show() {
-  uint8_t brightness = scale(analogRead(A0), 1024, 255);
+  uint8_t brightness = 128;//scale(analogRead(A0), 1024, 255);
   strip.setBrightness(brightness);
   strip.show();
 }
@@ -77,5 +77,8 @@ uint32_t Mode::Wheel(byte WheelPos, byte brightness) {
   }
   return strip.Color(r * brightness >> 8, g * brightness >> 8, b * brightness >> 8);
 }
+
+
+
 
 
