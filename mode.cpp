@@ -38,13 +38,14 @@
 //  0, 234, 21, 0, 237, 18, 0, 240, 15, 0, 243, 12, 0, 246, 9, 0, 249, 6, 0, 252, 3, 0, 255, 0
 //};
 
+int Mode::brightness = 255;
+
 unsigned int Mode::scale(unsigned int num, unsigned int natural_max, unsigned int target_max) {
   unsigned long upper = (unsigned long)(num) * target_max;
   return (unsigned int)(upper / natural_max);
 }
 
 void Mode::show() {
-  uint8_t brightness = 128;//scale(analogRead(A0), 1024, 255);
   strip.setBrightness(brightness);
   strip.show();
 }

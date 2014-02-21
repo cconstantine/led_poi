@@ -17,6 +17,7 @@ public:
   static Adafruit_NeoPixel strip;
 
   static byte rainbow_pallet[][3];
+  static int brightness;
 protected:
 
   unsigned int scale(unsigned int num, unsigned int natural_max, unsigned int target_max);
