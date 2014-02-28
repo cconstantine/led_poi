@@ -7,12 +7,11 @@ class Chase: public Mode {
 public:
   Chase();
   virtual void tick();
+  virtual void activate();
   
 private:
-  int pos;
-  int speed;
-  unsigned long last_move;  
-
+  float pos;
+  unsigned long last_move;
 };
 
 

@@ -7,6 +7,7 @@ class Mode {
  
 public:
   virtual void tick() = 0;
+  virtual void activate();
   void show();
 
   // Input a value 0 to 255 to get a color value.  
@@ -18,9 +19,9 @@ public:
 
   static byte rainbow_pallet[][3];
   static int brightness;
-protected:
-
-  unsigned int scale(unsigned int num, unsigned int natural_max, unsigned int target_max);
+  static float speed;
+  static float rainbow_speed;
+  static float width;
 };
 
 #endif

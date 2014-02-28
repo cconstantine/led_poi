@@ -38,25 +38,37 @@
 //  0, 234, 21, 0, 237, 18, 0, 240, 15, 0, 243, 12, 0, 246, 9, 0, 249, 6, 0, 252, 3, 0, 255, 0
 //};
 
-int Mode::brightness = 255;
-
-unsigned int Mode::scale(unsigned int num, unsigned int natural_max, unsigned int target_max) {
-  unsigned long upper = (unsigned long)(num) * target_max;
-  return (unsigned int)(upper / natural_max);
-}
+int Mode::brightness = 10;
+float Mode::speed = 0.5;
+float Mode::rainbow_speed = 0.25;
+float Mode::width = 0.1;
 
 void Mode::show() {
   strip.setBrightness(brightness);
   strip.show();
 }
 
+void Mode::activate() { }
+
 uint32_t Mode::Wheel(byte WheelPos) {
   return Wheel(WheelPos, 255);
 }
 
+
 uint32_t Mode::Wheel(byte WheelPos, byte brightness) {
+  static float pos = 0;
+  static unsigned long last_tick = millis();
+  unsigned long now = millis();
+  float delta = rainbow_speed * (now - last_tick);
+  pos += delta;
+  last_tick = now;
+  
+  if(pos > 255) {
+    pos -= 255;
+  } 
   uint8_t r, g, b;
 
+  WheelPos = (byte)(((int)WheelPos + (int)pos) % 255);
   if(WheelPos < 85) {
     r = WheelPos * 3;
     g = 255 - WheelPos * 3;
