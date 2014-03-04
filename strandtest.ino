@@ -8,11 +8,15 @@
 #include <Adafruit_NeoPixel.h>
 #include <speed_report.h>
 
-#include "rainbow.h"
+#include "stars.h"
 #include "chase.h"
 
+#include <Wire.h>
+#include <ADXL345.h>
 
-Adafruit_NeoPixel Mode::strip(57, 2, NEO_GRB + NEO_KHZ800);
+ADXL345 adxl; //variable adxl is an instance of the ADXL345 library
+
+Adafruit_NeoPixel Mode::strip(57, 7, NEO_GRB + NEO_KHZ800);
 
 Mode* modes[2];
 int mode = 0;
@@ -27,11 +31,13 @@ void setup() {
   Serial1.begin(9600);
   Rpc::init();
 
+  adxl.powerOn();
+  adxl.setRangeSetting(8);
   Mode::strip.begin();
   Mode::strip.show();
 
   modes[0] = new Chase();
-  modes[1] = new Rainbow();
+  modes[1] = new Stars();
 }
 
 void loop() {
@@ -39,6 +45,7 @@ void loop() {
   modes[mode]->tick();
   modes[mode]->show();
 
+ 
   com_example_glowybits_rcp_RpcMessage msg;
 
   if(Rpc::instance->next_message(&msg)) {
@@ -61,6 +68,10 @@ void loop() {
       break;
       
      case com_example_glowybits_rcp_RpcMessage_Action_FRAMES_PER_SECOND:
+      double vals[3];
+      adxl.get_Gxyz(vals); //read the accelerometer values and store them in variables x,y,z
+      return_msg.has_arg2 = true;
+      return_msg.arg2 = 8* sqrt(pow(vals[0], 2) + pow(vals[1], 2) + pow(vals[2], 2)); 
       return_msg.has_arg1 = true;
       return_msg.arg1 = sr.fps;
       break;

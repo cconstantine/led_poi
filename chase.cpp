@@ -29,16 +29,11 @@ void Chase::tick() {
   memset(strip.getPixels(), 0, strip.numPixels() * 3);
   
   for(int i = 0;i < effective_width;++i) {
-    strip.setPixelColor(pos + i, Wheel(i));
-    // rainbow_pallet[wheel_pos][0],
-    // rainbow_pallet[wheel_pos][1],
-    // rainbow_pallet[wheel_pos][2]);
-     
-    strip.setPixelColor( (strip.numPixels() - effective_width) -  (pos + i), Wheel(i));
-    // rainbow_pallet[wheel_pos][0],
-    // rainbow_pallet[wheel_pos][1],
-    // rainbow_pallet[wheel_pos][2]);
-     
+    if (pos + i < strip.numPixels())
+      strip.setPixelColor(pos + i, Wheel(i));
+      
+    if (strip.numPixels() - (pos + i) >= 0)
+      strip.setPixelColor( strip.numPixels() -  (pos + i), Wheel(i));     
   }
 }
 
