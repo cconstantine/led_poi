@@ -8,13 +8,15 @@ Chase::Chase() : pos(0) {
 int direction = 1;
 
 void Chase::activate() {
+  Mode::activate();
   last_move = millis();
 }
   
 void Chase::tick() {
+  Mode::tick();
   int effective_width = width * strip.numPixels();
   unsigned long now = millis();
-  float delta = speed * (now - last_move) / 2;
+  float delta = speed * (now - last_move);
   pos += direction  * delta;
   last_move = now;
   if(pos + effective_width > strip.numPixels()) {
@@ -36,6 +38,9 @@ void Chase::tick() {
       strip.setPixelColor( strip.numPixels() -  (pos + i), Wheel(i));     
   }
 }
+
+
+
 
 
 
