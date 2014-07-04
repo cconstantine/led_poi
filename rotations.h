@@ -11,14 +11,21 @@ class Rotations {
   Rotations();
   void tick();
   
-  float getAccel();
+  uint16_t getAccel();
   
-  unsigned long rotations;
-  unsigned long period;
+  uint16_t currentSample();
+  uint16_t maxSample();
+  uint16_t minSample();
+  uint16_t avgSample();
   
+  bool isActive();
  private:
  
-  static const int max_samples = 1;
+  static const int max_samples = 200;
+  uint16_t max_sample;
+  uint16_t min_sample;
+  uint32_t sum_sample;
+  
   uint16_t samples[max_samples];
   int sample_position;
   

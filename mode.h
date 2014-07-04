@@ -7,6 +7,7 @@
 class Mode {
  
 public:
+  void static init();
   virtual void tick();
   virtual void activate();
   void show();
@@ -23,7 +24,7 @@ public:
   static float speed;
   static float rainbow_speed;
   static float width;
-  //static Rotations rots;
+  static Rotations* rots;
   
 };
 

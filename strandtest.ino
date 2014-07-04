@@ -32,11 +32,11 @@ void setup() {
   Serial1.begin(9600);
   Rpc::init();
   
-  Mode::strip.begin();
-  Mode::strip.show();
+  Mode::init();
 
   modes[0] = new Chase();
   modes[1] = new Stars();
+  modes[0]->activate();
 }
 
 int freeRam () {
@@ -47,10 +47,7 @@ int freeRam () {
 
 void loop() {
   unsigned long ping = millis();
-  if(ping + 1000 < millis() ) {
-    ping += 1000;
-    Serial.println("ping");
-  }
+  
   if (freeRam() < 500) {
     Serial.print("LOW freemem: ");
     Serial.println(freeRam());
@@ -63,37 +60,21 @@ void loop() {
   
   com_example_glowybits_rcp_RpcMessage msg;
   if(Rpc::instance->next_message(&msg)) {
-    switch(msg.action) {
-     case com_example_glowybits_rcp_RpcMessage_Action_FRAMES_PER_SECOND:
-      msg.has_arg2 = true;
-      msg.arg2 = 0.0f;//Mode::rots.getAccel();
-      msg.has_arg1 = true;
-      msg.arg1 = sr.fps;
-      Rpc::instance->send_message(&msg); 
-      break;
-     
-     case com_example_glowybits_rcp_RpcMessage_Action_CHANGE_MODE:
-      nextMode();
-      msg.has_arg1 = true;
-      msg.arg1 = mode;
-      break;
-     case com_example_glowybits_rcp_RpcMessage_Action_CHANGE_BRIGHTNESS:
-      Mode::brightness = msg.arg1;
-      break;
-      
-     case com_example_glowybits_rcp_RpcMessage_Action_CHANGE_SPEED:
-      Mode::speed = msg.arg2;
-      break;
-      
-     case com_example_glowybits_rcp_RpcMessage_Action_CHANGE_RAINBOW_SPD:
-      Mode::rainbow_speed = msg.arg2;
-      break;
-      
-     case com_example_glowybits_rcp_RpcMessage_Action_CHANGE_WIDTH:
-      Mode::width = msg.arg2;
-      break;
-      
-   }
+    if (msg.has_settings) {
+      int last_mode = mode;
+      mode = msg.settings.mode;
+      if (mode != last_mode) {
+        modes[mode]->activate();
+      }
+      Mode::brightness = msg.settings.brightness;
+      Mode::speed = msg.settings.speed;
+      Mode::rainbow_speed = msg.settings.rainbow_speed;
+      Mode::width = msg.settings.width;
+    }
+    msg.has_settings = false;
+    msg.has_status = true;
+    msg.status.fps = sr.fps;
+    Rpc::instance->send_message(&msg);
   }
 }
 

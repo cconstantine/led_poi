@@ -27,7 +27,6 @@ void Chase::tick() {
     pos = 0;
   } 
   
-
   memset(strip.getPixels(), 0, strip.numPixels() * 3);
   
   for(int i = 0;i < effective_width;++i) {

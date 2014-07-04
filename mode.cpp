@@ -4,25 +4,33 @@
 #include "mode.h"
 #include "rotations.h"
 
-unsigned int Mode::brightness = 20;
+unsigned int Mode::brightness = 255;
 float Mode::speed = 0.5;
 float Mode::rainbow_speed = 0.25;
 float Mode::width = 0.1;
-//Rotations Mode::rots;
+Rotations* Mode::rots;
 
+void Mode::init() {
+  Mode::rots = new Rotations();
+  Mode::strip.begin();
+  Mode::strip.show();
+}
 
 void Mode::show() {
-  strip.setBrightness(brightness);
+  unsigned int real_brightness = brightness;
+  if (!rots->isActive()) {
+    real_brightness = 20;
+  }
+  
+  strip.setBrightness(real_brightness);
   strip.show();
 }
 
 void Mode::tick() {
-  //rots.tick();
+  rots->tick();
 }
 
-void Mode::activate() {
-  
-}
+void Mode::activate() { }
 
 uint32_t Mode::Wheel(byte WheelPos) {
   return Wheel(WheelPos, 255);
