@@ -1,7 +1,10 @@
 #ifndef __MODE_H__
 #define __MODE_H__
 
-#include <Adafruit_NeoPixel.h>
+#ifndef __LDPD8806_h__
+#include <LPD8806.h>
+#endif 
+
 #include "rotations.h"
  
 class Mode {
@@ -17,8 +20,9 @@ public:
   uint32_t Wheel(byte WheelPos);
   uint32_t Wheel(byte WheelPos, byte brightness);
   float static getAccel();
+  unsigned int getBrightness();
   
-  static Adafruit_NeoPixel strip;
+  static LPD8806 strip;
 
   static unsigned int brightness;
   static float speed;

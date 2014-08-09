@@ -27,7 +27,9 @@ void Chase::tick() {
     pos = 0;
   } 
   
-  memset(strip.getPixels(), 0, strip.numPixels() * 3);
+  for(int i = 0;i < strip.numPixels();++i) {
+    strip.setPixelColor(i, strip.Color(0,0,0));
+  }
   
   for(int i = 0;i < effective_width;++i) {
     if (pos + i < strip.numPixels())

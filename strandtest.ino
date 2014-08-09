@@ -1,3 +1,8 @@
+#include <LPD8806.h>
+#include <SPI.h>
+#define __LDPD8806_h__
+
+//#include <SPI.h>
 
 
 #include <pb_decode.h>
@@ -6,16 +11,16 @@
 #include <bluetooth.h>
 #include <message.pb.h>
 
-#include <Adafruit_NeoPixel.h>
 #include <speed_report.h>
 
 #include <Wire.h>
 #include <ADXL345.h>
 
+#include "mode.h"
 #include "stars.h"
 #include "chase.h"
 
-Adafruit_NeoPixel Mode::strip(57, 7, NEO_GRB + NEO_KHZ800);
+LPD8806 Mode::strip(32*2, 2, 3);
 
 Mode* modes[2];
 int mode = 0;
@@ -39,21 +44,19 @@ void setup() {
   modes[0]->activate();
 }
 
-int freeRam () {
-  extern int __heap_start, *__brkval; 
-  int v; 
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
-}
 
 void loop() {
   unsigned long ping = millis();
+  static long last_millis = ping;
   
-  if (freeRam() < 500) {
-    Serial.print("LOW freemem: ");
-    Serial.println(freeRam());
-    delay(1000);
-    return;
+  if(last_millis + 1000 < ping) {
+    Serial.print("fps: ");
+    Serial.println(sr.fps);
+    
+    last_millis = ping;
   }
+  
+
   sr.tick();
   modes[mode]->tick();
   modes[mode]->show();
@@ -76,6 +79,7 @@ void loop() {
     msg.status.fps = sr.fps;
     Rpc::instance->send_message(&msg);
   }
+  
 }
 
 

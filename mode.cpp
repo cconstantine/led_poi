@@ -1,13 +1,11 @@
 
-#include <Adafruit_NeoPixel.h>
-
 #include "mode.h"
 #include "rotations.h"
 
 unsigned int Mode::brightness = 255;
-float Mode::speed = 0.5;
+float Mode::speed = 0.025;
 float Mode::rainbow_speed = 0.25;
-float Mode::width = 0.1;
+float Mode::width = 1;
 Rotations* Mode::rots;
 
 void Mode::init() {
@@ -18,11 +16,13 @@ void Mode::init() {
 
 void Mode::show() {
   unsigned int real_brightness = brightness;
+  /*
   if (!rots->isActive()) {
     real_brightness = 20;
   }
+  */
   
-  strip.setBrightness(real_brightness);
+  //strip.setBrightness(real_brightness);
   strip.show();
 }
 
@@ -30,10 +30,18 @@ void Mode::tick() {
   rots->tick();
 }
 
+unsigned int Mode::getBrightness() {
+  if (!rots->isActive()) {
+    return 20;
+  }
+  
+  return brightness;
+}
+
 void Mode::activate() { }
 
 uint32_t Mode::Wheel(byte WheelPos) {
-  return Wheel(WheelPos, 255);
+  return Wheel(WheelPos, getBrightness());
 }
 
 

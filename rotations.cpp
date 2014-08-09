@@ -9,13 +9,6 @@ Rotations::Rotations() : sample_position(0), min_sample(0), max_sample(0), sum_s
 }
 const int sample_rate = 10;
 
-int freeRam1 () {
-  extern int __heap_start, *__brkval; 
-  int v; 
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
-}
-
-
 uint16_t Rotations::currentSample() {
   return samples[sample_position];
 }
@@ -48,6 +41,7 @@ void Rotations::tick() {
       Serial.println("Oops");
     }
     uint16_t current_sample = getAccel();
+
     sum_sample -= samples[sample_position];
     sum_sample += current_sample;
 
@@ -66,9 +60,6 @@ void Rotations::tick() {
     
     if (sample_position >= max_samples) {
       sample_position = 0;
-      
-      Serial.print("Free MEM: ");
-      Serial.println(freeRam1());
       
       Serial.println("-------------------");
       Serial.print("minSample() = ");
@@ -90,13 +81,16 @@ void Rotations::tick() {
 }
 
 uint16_t Rotations::getAccel() {
-  int xyz[3];
-  adxl.readAccel(xyz);
-  uint32_t sum = 0;
-  for(int i = 0;i < 3;++i) {
-    sum += ((uint32_t)xyz[i]) * ((uint32_t)xyz[i]);
-  }
-  return sqrt(sum)*(1000.0 / 270.0) ; 
+  int16_t x, y, z;
+  adxl.readAccel((int*)&x, (int*)&y, (int*)&z);
+  
+  double sum = 0;
+
+  sum += x * x;
+  sum += y * y;  
+  sum += z * z;
+
+  return sqrt(sum) *(1000.0 / 270.0) ; 
 }
 
 

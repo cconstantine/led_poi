@@ -3,7 +3,6 @@
 
 #include "mode.h"
 
-
 class Chase: public Mode {
 public:
   Chase();
