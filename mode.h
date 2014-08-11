@@ -1,15 +1,15 @@
 #ifndef __MODE_H__
 #define __MODE_H__
 
-#ifndef __LDPD8806_h__
-#include <LPD8806.h>
-#endif 
+#include "FastLED.h"
 
 #include "rotations.h"
  
 class Mode {
  
 public:
+  const static unsigned int numLeds = 54;//32*2;
+
   void static init();
   virtual void tick();
   virtual void activate();
@@ -17,12 +17,16 @@ public:
 
   // Input a value 0 to 255 to get a color value.  
   // The colours are a transition r - g - b - back to r.
-  uint32_t Wheel(byte WheelPos);
-  uint32_t Wheel(byte WheelPos, byte brightness);
+  /*
+  CRGB Wheel(byte WheelPos);
+  CRGB Wheel(byte WheelPos, byte brightness);
+  */
+  uint8_t color_pos(int i);
+
   float static getAccel();
   unsigned int getBrightness();
   
-  static LPD8806 strip;
+  static CRGB strip[];
 
   static unsigned int brightness;
   static float speed;

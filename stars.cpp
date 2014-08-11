@@ -2,6 +2,7 @@
 
 
 void Stars::tick() {
+  /*
   Mode::tick();
   int effective_width = width * strip.numPixels();
 
@@ -13,6 +14,7 @@ void Stars::tick() {
     strip.setPixelColor(random(strip.numPixels() - 1), Wheel(i));
     //strip.setPixelColor(i, Wheel(i));
   }
+  */
 }
 
 

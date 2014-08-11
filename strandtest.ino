@@ -1,9 +1,4 @@
-#include <LPD8806.h>
-#include <SPI.h>
-#define __LDPD8806_h__
-
-//#include <SPI.h>
-
+#include "FastLED.h"
 
 #include <pb_decode.h>
 #include <pb_encode.h>
@@ -19,8 +14,6 @@
 #include "mode.h"
 #include "stars.h"
 #include "chase.h"
-
-LPD8806 Mode::strip(32*2, 2, 3);
 
 Mode* modes[2];
 int mode = 0;
