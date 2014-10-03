@@ -3,9 +3,9 @@
 #include "rotations.h"
 
 unsigned int Mode::brightness = 255;
-float Mode::speed = 0.025;
+float Mode::speed = 1.1;
 float Mode::rainbow_speed = 0.25;
-float Mode::width = 0.1;
+float Mode::width = 0.5;
 Rotations* Mode::rots;
 
 CRGB Mode::strip[Mode::numLeds];
@@ -18,9 +18,7 @@ void Mode::init() {
 
 void Mode::show() {
   unsigned int real_brightness = brightness;
-  
-  //strip.setBrightness(real_brightness);
-  //strip.show();
+
   FastLED.show(); 
 
 }
@@ -31,11 +29,33 @@ void Mode::tick() {
 
 unsigned int Mode::getBrightness() {
   if (!rots->isActive()) {
-    return 20;
+    return brightness/10;
   }
   
   return brightness;
 }
+
+float Mode::getSpeed() {
+  if (!rots->isActive()) {
+    return speed/10;
+  }
+  
+  return speed;
+}
+
+float Mode::setSpeed(float newSpeed) {
+  float old_speed = speed;
+  speed = newSpeed;
+  return old_speed;
+}
+
+unsigned int Mode::setBrightness(unsigned int newBrightness) {
+  float old_brightness = brightness;
+  brightness = newBrightness;
+  return old_brightness;
+}
+
+  
 
 void Mode::activate() { }
 

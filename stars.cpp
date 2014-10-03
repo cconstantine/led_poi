@@ -2,19 +2,16 @@
 
 
 void Stars::tick() {
-  /*
   Mode::tick();
-  int effective_width = width * strip.numPixels();
-
-  for(int i = 0;i < effective_width;++i) {
-    strip.setPixelColor(i, 0);
-  }
+    
+  fill_solid( strip, Mode::numLeds, CHSV( 0,0,0));
+  
+  int effective_width = width * Mode::numLeds;
   
   for(int i = 0;i < effective_width;++i) {
-    strip.setPixelColor(random(strip.numPixels() - 1), Wheel(i));
-    //strip.setPixelColor(i, Wheel(i));
+    strip[random(Mode::numLeds - 1)] = CHSV(color_pos(i), 255, getBrightness());;
+    strip[i].nscale8(getBrightness());
   }
-  */
 }
 
 

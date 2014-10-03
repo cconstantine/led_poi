@@ -62,8 +62,8 @@ void loop() {
       if (mode != last_mode) {
         modes[mode]->activate();
       }
-      Mode::brightness = msg.settings.brightness;
-      Mode::speed = msg.settings.speed;
+      Mode::setBrightness(msg.settings.brightness);
+      Mode::setSpeed(msg.settings.speed);
       Mode::rainbow_speed = msg.settings.rainbow_speed;
       Mode::width = msg.settings.width;
     }

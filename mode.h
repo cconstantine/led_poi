@@ -24,16 +24,22 @@ public:
   uint8_t color_pos(int i);
 
   float static getAccel();
-  unsigned int getBrightness();
+  
+  static float getSpeed();
+  static float setSpeed(float);
+  
+  static unsigned int getBrightness();
+  static unsigned int setBrightness(unsigned int);
   
   static CRGB strip[];
 
-  static unsigned int brightness;
-  static float speed;
   static float rainbow_speed;
   static float width;
   static Rotations* rots;
   
+  private:
+  static float speed;
+  static unsigned int brightness;
 };
 
 #endif
