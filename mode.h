@@ -28,18 +28,21 @@ public:
   static float getSpeed();
   static float setSpeed(float);
   
+  static int   getWidth();
+  static float   setWidth(float);
+  
   static unsigned int getBrightness();
   static unsigned int setBrightness(unsigned int);
   
   static CRGB strip[];
 
   static float rainbow_speed;
-  static float width;
   static Rotations* rots;
   
   private:
   static float speed;
   static unsigned int brightness;
+  static float width;
 };
 
 #endif

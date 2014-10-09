@@ -25,14 +25,15 @@ void Mode::show() {
 
 void Mode::tick() {
   rots->tick();
+  fill_solid( strip, Mode::numLeds, CHSV( 0,0,0));
 }
 
 unsigned int Mode::getBrightness() {
   if (!rots->isActive()) {
-    return brightness/10;
+    return brightness/10 | 15;
   }
   
-  return brightness;
+  return brightness | 15;
 }
 
 float Mode::getSpeed() {
@@ -45,9 +46,25 @@ float Mode::getSpeed() {
 
 float Mode::setSpeed(float newSpeed) {
   float old_speed = speed;
-  speed = newSpeed;
+  speed = newSpeed * 2;
   return old_speed;
 }
+
+
+int Mode::getWidth() {
+  int w = width * Mode::numLeds;
+  if (w == 0) {
+    w = 1;
+  }  
+  return w;
+}
+
+float Mode::setWidth(float newWidth) {
+  float old_width = width;
+  width = newWidth;
+  return old_width;
+}
+
 
 unsigned int Mode::setBrightness(unsigned int newBrightness) {
   float old_brightness = brightness;
@@ -72,50 +89,6 @@ uint8_t Mode::color_pos(int i) {
   }
   return (uint8_t)(pos + i) ;
 }
-
-/*
-CRGB Mode::Wheel(byte WheelPos) {
-  return Wheel(WheelPos, getBrightness());
-}
-
-
-CRGB Mode::Wheel(byte WheelPos, byte brightness) {
-  static float pos = 0;
-  static unsigned long last_tick = millis();
-  unsigned long now = millis();
-  float delta = rainbow_speed * (now - last_tick);
-  pos += delta;
-  last_tick = now;
-
-  if(pos > 255) {
-    pos -= 255;
-  } 
-  uint8_t r, g, b;
-
-  WheelPos = (byte)(((int)WheelPos + (int)pos) % 255);
-  if(WheelPos < 85) {
-    r = WheelPos * 3;
-    g = 255 - WheelPos * 3;
-    b = 0;
-  } 
-  else if(WheelPos < 170) {
-    WheelPos -= 85;
-
-    r = 255 - WheelPos * 3;
-    g = 0;
-    b = WheelPos * 3;
-  } 
-  else {
-    WheelPos -= 170;
-
-    r = 0;
-    g = WheelPos * 3;
-    b = 255 - WheelPos * 3;
-  }
-  return strip.Color(r * brightness >> 8, g * brightness >> 8, b * brightness >> 8);
-}
-*/
-
 
 
 

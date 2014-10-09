@@ -14,8 +14,10 @@
 #include "mode.h"
 #include "stars.h"
 #include "chase.h"
+#include "spiral.h"
+#include "lines.h"
 
-Mode* modes[2];
+Mode* modes[4];
 int mode = 0;
 void nextMode() {
   const static int numModes = sizeof(modes) / sizeof(Mode*);
@@ -34,6 +36,8 @@ void setup() {
 
   modes[0] = new Chase();
   modes[1] = new Stars();
+  modes[2] = new Lines();
+  modes[3] = new Spiral();
   modes[0]->activate();
 }
 
@@ -65,7 +69,7 @@ void loop() {
       Mode::setBrightness(msg.settings.brightness);
       Mode::setSpeed(msg.settings.speed);
       Mode::rainbow_speed = msg.settings.rainbow_speed;
-      Mode::width = msg.settings.width;
+      Mode::setWidth(msg.settings.width);
     }
     msg.has_settings = false;
     msg.has_status = true;
