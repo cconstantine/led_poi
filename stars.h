@@ -5,7 +5,7 @@
 
 class Stars: public Mode {
 public:
-  virtual void tick();
+  virtual void draw();
 };
 
 

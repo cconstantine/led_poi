@@ -6,7 +6,7 @@
 class Spiral: public Mode {
 public:
   Spiral();
-  virtual void tick();
+  virtual void draw();
   virtual void activate();
   
 private:

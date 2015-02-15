@@ -11,9 +11,8 @@ void Chase::activate() {
   Mode::activate();
   last_move = millis();
 }
-  
-void Chase::tick() {
-  Mode::tick();
+
+void Chase::draw() {
   int effective_width = getWidth();
   
   unsigned long now = millis();
@@ -28,8 +27,10 @@ void Chase::tick() {
     pos = 0;
   } 
   
+  for(int i = (int)pos;i < pos + (int)effective_width;i++) {
+    strip[i] = color_at_pos(i);
+  }
   
-  fill_rainbow(strip + (int)pos, effective_width, color_pos(0));
 
   for(int i = 0;i < Mode::numLeds;++i) {
     strip[i].nscale8(getBrightness());

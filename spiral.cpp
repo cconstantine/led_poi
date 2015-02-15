@@ -11,8 +11,7 @@ void Spiral::activate() {
   last_move = millis();
 }
   
-void Spiral::tick() {
-  Mode::tick();
+void Spiral::draw() {
   int effective_width = getWidth();
   
   unsigned long now = millis();
@@ -23,7 +22,10 @@ void Spiral::tick() {
     pos = 0;
   }
   
-  fill_rainbow(strip + (int)pos, effective_width, color_pos(0));
+  
+  for(int i = (int)pos;i < pos + (int)effective_width;i++) {
+    strip[i] = color_at_pos(i);
+  }
 
   for(int i = 0;i < Mode::numLeds;++i) {
     strip[i].nscale8(getBrightness());

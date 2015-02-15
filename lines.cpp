@@ -5,13 +5,7 @@ Lines::Lines() {
   memset(lines, 0, sizeof(lines));
 }
 
-
-void Lines::activate() {
-  Mode::activate();
-}
-  
-void Lines::tick() {
-  Mode::tick();
+void Lines::draw() {
   int effective_width = 6;
  
  
@@ -26,7 +20,7 @@ void Lines::tick() {
     lastAddition = millis();
     int selection = random(Mode::numLeds - effective_width);
     
-    lines[selection].color = CHSV(color_pos(0), 255, 255);
+    lines[selection].color = color_at_pos(0);
     lines[selection].until = millis() + getWidth() + random(500);
   }
   

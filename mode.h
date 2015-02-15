@@ -12,6 +12,7 @@ public:
 
   void static init();
   virtual void tick();
+  virtual void draw() = 0;
   virtual void activate();
   void show();
 
@@ -22,6 +23,7 @@ public:
   CRGB Wheel(byte WheelPos, byte brightness);
   */
   uint8_t color_pos(int i);
+  CRGB color_at_pos(int i);
 
   float static getAccel();
   
@@ -34,15 +36,27 @@ public:
   static unsigned int getBrightness();
   static unsigned int setBrightness(unsigned int);
   
+  static CRGB getColor1();
+  static uint32_t setColor1(uint32_t);
+  
+  static CRGB getColor2();
+  static uint32_t setColor2(uint32_t);
+  
+  static CRGB getColor3();
+  static uint32_t setColor3(uint32_t);
+  
   static CRGB strip[];
 
   static float rainbow_speed;
-  static Rotations* rots;
+  //static Rotations* rots;
   
   private:
   static float speed;
   static unsigned int brightness;
   static float width;
+  static uint32_t color1;
+  static uint32_t color2;
+  static uint32_t color3;
 };
 
 #endif

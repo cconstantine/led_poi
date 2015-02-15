@@ -8,8 +8,7 @@ class Lines: public Mode {
   
 public:
   Lines();
-  virtual void tick();
-  virtual void activate();
+  virtual void draw();
   
 private:
 

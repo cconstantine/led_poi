@@ -6,7 +6,7 @@
 class Chase: public Mode {
 public:
   Chase();
-  virtual void tick();
+  virtual void draw();
   virtual void activate();
   
 private:
